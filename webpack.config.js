@@ -32,12 +32,12 @@ module.exports = {
     new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
       title: "Home - WebAudio",
-      template: "src/pages/home.html",
+      template: "src/pages/home.pug",
     }),
     new HtmlWebpackPlugin({
       title: "Hello",
       filename: "test.html",
-      template: "src/pages/page_2.html",
+      template: "src/pages/page2.pug",
     }),
   ],
 };
