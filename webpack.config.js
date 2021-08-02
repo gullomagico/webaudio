@@ -2,6 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const webpack = require("webpack");
 const buildPath = path.resolve(__dirname, "dist");
 
 module.exports = {
@@ -28,6 +29,9 @@ module.exports = {
     ],
   },
   plugins: [
+    new webpack.DefinePlugin({
+      // Definitions...
+    }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
@@ -36,8 +40,8 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       title: "Hello",
-      filename: "test.html",
-      template: "src/pages/page2.pug",
+      filename: "pages/test.html",
+      template: "src/pages/page1.pug",
     }),
   ],
 };

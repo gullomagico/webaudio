@@ -1,3 +1,4 @@
+- var fs = require('fs');
 include includes/head
 body
   include includes/navbar
@@ -6,8 +7,8 @@ body
       This is a collection of examples and experiments with the Web Audio API technology.
   .container.text-center
     .row 
-      each page in ["test1", "test2", "test3", "test4", "test5"]
+      each page in fs.readdirSync("./src/pages")
         .col-12.col-sm-6.my-2
           .card(class="border-light bg-transparent text-light")
             .card-body
-              h5 #{page}
+              h5 #{page.slice(0, -4)}
