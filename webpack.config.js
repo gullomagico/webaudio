@@ -32,7 +32,7 @@ module.exports = {
     new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
       title: "Home - WebAudio",
-      template: "src/pages/home.pug",
+      template: "src/index.pug",
     }),
     new HtmlWebpackPlugin({
       title: "Hello",
