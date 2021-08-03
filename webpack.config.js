@@ -1,10 +1,19 @@
 const path = require("path");
+var fs = require("fs");
 const InterpolateHtmlPlugin = require("interpolate-html-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const webpack = require("webpack");
 const buildPath = path.resolve(__dirname, "dist");
+
+// Set up html webpack plugin for every .pug file in pages folder
+let htmlPagesNames = fs.readdirSync("./src/pages");
+let multipleHtmlPlugins = htmlPagesNames.map((name) => {
+  return new HtmlWebpackPlugin({
+    template: "./src/pages/" + name,
+    filename: "pages/" + name.slice(0, -4) + ".html",
+  });
+});
 
 module.exports = (env, options) => {
   console.log("This is the webpack 'mode': " + options.mode);
@@ -38,17 +47,12 @@ module.exports = (env, options) => {
         title: "Home - WebAudio",
         template: "src/index.pug",
       }),
-      new HtmlWebpackPlugin({
-        title: "Hello",
-        filename: "pages/test.html",
-        template: "src/pages/page1.pug",
-      }),
       new InterpolateHtmlPlugin({
         PUBLIC_URL:
           options.mode === "production"
             ? "https://cafa.dev/WebAudio"
-            : "localhost:8080",
+            : "http://localhost:8080",
       }),
-    ],
+    ].concat(multipleHtmlPlugins),
   };
 };

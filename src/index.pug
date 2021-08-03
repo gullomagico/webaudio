@@ -7,8 +7,6 @@ body
       This is a collection of examples and experiments with the Web Audio API technology.
   .container.text-center
     .row 
-      each page in fs.readdirSync("./src/pages")
-        .col-12.col-sm-6.my-2
-          .card(class="border-light bg-transparent text-light")
-            .card-body
-              h5 #{page.slice(0, -4)}
+      each n in fs.readdirSync("./src/pages") 
+        .col-12.col-sm-6.my-2.hover
+          a(type="button" class="btn btn-outline-light w-100" href="/pages/"+n.slice(0, -3)+"html") Generatore di Segnale
