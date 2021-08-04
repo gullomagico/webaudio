@@ -1,5 +1,9 @@
-- var fs = require('fs');
+- const fs = require('fs');
 - 
+  let titles = [
+    {title: "Oscillator", desc: "Simple Oscillator with some parameters"},
+    {title: "Filters", desc: "Different filters applied to white noise"}
+  ]
 
 include includes/head
 body
@@ -9,6 +13,8 @@ body
       This is a collection of examples and experiments with the Web Audio API technology.
   .container.text-center
     .row 
-      each page in fs.readdirSync("./src/pages") 
+      each page in titles  
         .col-12.col-sm-6.my-2.hover
-          a(type="button" class="btn btn-outline-light w-100" href=page.slice(0, -3)+"html") Generatore di Segnale
+          a(type="button" class="btn btn-outline-light w-100" href=page.title+".html") 
+            h2 #{page.title}
+            p #{page.desc}

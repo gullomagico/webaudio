@@ -22,8 +22,8 @@ module.exports = (env, options) => {
   return {
     entry: {
       main: "./src/main",
-      page1: "./src/js/page1",
-      page2: "./src/js/page2",
+      Oscillator: "./src/js/Oscillator",
+      Filters: "./src/js/Filters",
     },
     output: {
       path: buildPath,

@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import App from "./components/Osc";
+import App from "./components/Filters";
 
-import "../scss/page1.scss";
+import "../scss/Filters.scss";
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(
