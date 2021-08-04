@@ -1,4 +1,6 @@
 - var fs = require('fs');
+- 
+
 include includes/head
 body
   include includes/navbar
@@ -7,6 +9,6 @@ body
       This is a collection of examples and experiments with the Web Audio API technology.
   .container.text-center
     .row 
-      each n in fs.readdirSync("./src/pages") 
+      each page in fs.readdirSync("./src/pages") 
         .col-12.col-sm-6.my-2.hover
-          a(type="button" class="btn btn-outline-light w-100" href="/pages/"+n.slice(0, -3)+"html") Generatore di Segnale
+          a(type="button" class="btn btn-outline-light w-100" href=page.slice(0, -3)+"html") Generatore di Segnale

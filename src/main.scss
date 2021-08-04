@@ -3,15 +3,14 @@
 @use "~bootstrap/scss/mixins"; */
 
 @use "~bootstrap/scss/bootstrap";
-
-@use 'scss/colors';
+@use "~scss/colors";
 
 body {
-  background-color: rgb(27, 38, 44);
+  background-color: colors.$bg-color;
 }
 
 #navbar nav {
-  background-color: rgb(15, 76, 117);
+  background-color: colors.$base-color;
 }
 
 header {

@@ -10,18 +10,21 @@ const buildPath = path.resolve(__dirname, "dist");
 let htmlPagesNames = fs.readdirSync("./src/pages");
 let multipleHtmlPlugins = htmlPagesNames.map((name) => {
   return new HtmlWebpackPlugin({
-    template: "./src/pages/" + name,
-    filename: "pages/" + name.slice(0, -4) + ".html",
+    template: "src/pages/" + name,
+    filename: name.slice(0, -4) + ".html",
+    chunks: ["main", "page1"],
   });
 });
 
 module.exports = (env, options) => {
   console.log("This is the webpack 'mode': " + options.mode);
   return {
-    entry: "./src/main.js",
+    entry: {
+      main: "./src/main",
+      page1: "./src/js/page1",
+    },
     output: {
       path: buildPath,
-      filename: "bundle.js",
     },
     module: {
       rules: [
@@ -46,6 +49,7 @@ module.exports = (env, options) => {
       new HtmlWebpackPlugin({
         title: "Home - WebAudio",
         template: "src/index.pug",
+        chunks: ["main"],
       }),
       new InterpolateHtmlPlugin({
         PUBLIC_URL:
