@@ -11,6 +11,7 @@ const buildPath = path.resolve(__dirname, "dist");
 let htmlPagesNames = fs.readdirSync("./src/pages");
 let multipleHtmlPlugins = htmlPagesNames.map((name) => {
   return new HtmlWebpackPlugin({
+    title: name.slice(0, -4) + " - WebAudio",
     template: "src/pages/" + name,
     filename: name.slice(0, -4) + ".html",
     chunks: ["main", name.slice(0, -4)],
