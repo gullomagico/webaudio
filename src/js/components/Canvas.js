@@ -3,7 +3,7 @@ import React, { useRef, useEffect } from "react";
 function Canvas({ analyser, type }) {
   const canvasRef = useRef(null);
   const requestIdRef = useRef(null);
-  const size = { width: 1000, height: 150 };
+  const size = { width: window.innerWidth, height: 150 };
 
   let bufferLength;
   let dataArray;
@@ -13,11 +13,11 @@ function Canvas({ analyser, type }) {
   analyser.maxDecibels = -10;
 
   if (type === "time") {
-    analyser.fftSize = 1024;
+    analyser.fftSize = 512;
     bufferLength = analyser.fftSize;
     dataArray = new Float32Array(bufferLength);
   } else if (type === "frequency") {
-    analyser.fftSize = 1024;
+    analyser.fftSize = 2048;
     bufferLength = analyser.frequencyBinCount;
     dataArrayAlt = new Uint8Array(bufferLength);
   }

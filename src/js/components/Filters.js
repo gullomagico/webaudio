@@ -33,13 +33,6 @@ const Filter = () => {
     detune: filter.detune.value,
     type: filter.type,
   });
-  //When components unmount, turn off audio context
-  useEffect(() => {
-    console.log("Mounted");
-    return () => {
-      console.log("Unmounted");
-    };
-  });
   //Functions
   const changeSetting = (e) => {
     let { value, id } = e.target;
@@ -53,16 +46,21 @@ const Filter = () => {
   };
 
   return (
-    <div className="control">
+    <div>
       <h2>Filter</h2>
-      <div>
-        <button onClick={() => actx.resume()}>Play</button>
-        <button onClick={() => actx.suspend()}>Stop</button>
-      </div>
       <Canvas analyser={analyser} type="frequency" />
+      <div>
+        <button className="btn btn-success" onClick={() => actx.resume()}>
+          Play
+        </button>
+        <button className="btn btn-danger" onClick={() => actx.suspend()}>
+          Stop
+        </button>
+      </div>
       <div className="param">
         <h3>Frequency</h3>
         <input
+          className="w-50 m-auto my-2"
           onChange={changeSetting}
           type="text"
           id="frequency"
@@ -72,7 +70,7 @@ const Filter = () => {
           onChange={changeSetting}
           type="range"
           id="frequency"
-          max="2000"
+          max="20000"
           min="20"
           value={filter.frequency.value}
         />

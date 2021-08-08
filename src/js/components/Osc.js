@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Canvas from "./Canvas";
+import { freq2range, range2freq } from "../functions";
 
 //Setting Audio Context and Nodes
-let actx = new AudioContext();
+let actx = new (window.AudioContext || window.webkitAudioContext)();
 let out = actx.destination;
 actx.suspend();
 
@@ -18,52 +19,64 @@ osc.start();
 const Osc = () => {
   //Setting the state
   const [oscSettings, setOscSettings] = useState({
+    tempFreq: osc.frequency.value,
     frequency: osc.frequency.value,
     detune: osc.detune.value,
     type: osc.type,
   });
   //Functions
-  const checkFreqInput = (e) => {
-    let { value } = e.target;
-    if (isNaN(value)) e.target.value = oscSettings.frequency;
-    else if (value > 2000) e.target.value = 2000;
-    else if (value < 20) e.target.value = 20;
-  };
   const changeSetting = (e) => {
     let { value, id } = e.target;
-    setOscSettings({ ...oscSettings, [id]: value });
-    osc[id].value = value;
+    if (id === "frequency") {
+      value = range2freq(value);
+      setOscSettings({ ...oscSettings, tempFreq: value, frequency: value });
+      osc.frequency.value = value;
+    } else {
+      setOscSettings({ ...oscSettings, [id]: value });
+      osc[id].value = value;
+    }
   };
   const changeType = (e) => {
     let { id } = e.target;
     setOscSettings({ ...oscSettings, type: id });
     osc.type = id;
   };
+  const changeTempFreq = (e) => {
+    setOscSettings({ ...oscSettings, tempFreq: e.target.value });
+    if (e.key === "Enter") {
+      setOscSettings({ ...oscSettings, frequency: e.target.value });
+      osc.frequency.value = e.target.value;
+    }
+  };
 
   return (
-    <div className="control">
-      <h2>Oscillator</h2>
-      <div>
-        <button onClick={() => actx.resume()}>Play</button>
-        <button onClick={() => actx.suspend()}>Stop</button>
-      </div>
+    <div>
+      <h1>Oscillator</h1>
       <Canvas analyser={analyser} type="time" />
+      <div>
+        <button className="btn btn-success" onClick={() => actx.resume()}>
+          Play
+        </button>
+        <button className="btn btn-danger" onClick={() => actx.suspend()}>
+          Stop
+        </button>
+      </div>
       <div className="param">
         <h3>Frequency</h3>
         <input
-          onChange={changeSetting}
+          className="w-50 m-auto my-2"
           type="text"
-          id="frequency"
-          value={oscSettings.frequency}
-          onInput={checkFreqInput}
+          id="tempFreq"
+          value={oscSettings.tempFreq}
+          onChange={changeTempFreq}
+          onKeyUp={changeTempFreq}
         />
         <input
           onChange={changeSetting}
           type="range"
           id="frequency"
-          max="20000"
-          min="20"
-          value={oscSettings.frequency}
+          max="10000"
+          value={freq2range(oscSettings.frequency)}
         />
       </div>
       <div className="param">
