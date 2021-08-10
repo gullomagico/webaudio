@@ -8,12 +8,19 @@ let out = actx.destination;
 actx.suspend();
 
 let osc = actx.createOscillator();
+
 let gain = actx.createGain();
+let gainOut = actx.createGain();
+gain.gain.value = 0.2;
+gainOut.gain.value = 0.1; // this oscillator is TOO LOUD.
+
 let analyser = actx.createAnalyser();
-gain.gain.setValueAtTime(0.2, actx.currentTime);
-gain.connect(out);
+
 osc.connect(gain);
-osc.connect(analyser);
+gain.connect(analyser);
+gain.connect(gainOut);
+gainOut.connect(out);
+
 osc.start();
 
 const Osc = () => {
@@ -22,6 +29,7 @@ const Osc = () => {
     tempFreq: osc.frequency.value,
     frequency: osc.frequency.value,
     detune: osc.detune.value,
+    gain: gain.gain.value,
     type: osc.type,
   });
   //Functions
@@ -31,6 +39,9 @@ const Osc = () => {
       value = range2freq(value);
       setOscSettings({ ...oscSettings, tempFreq: value, frequency: value });
       osc.frequency.value = value;
+    } else if (id === "gain") {
+      setOscSettings({ ...oscSettings, gain: value });
+      gain.gain.setValueAtTime(value, actx.currentTime);
     } else {
       setOscSettings({ ...oscSettings, [id]: value });
       osc[id].value = value;
@@ -60,6 +71,18 @@ const Osc = () => {
         <button className="btn btn-danger" onClick={() => actx.suspend()}>
           Stop
         </button>
+      </div>
+      <div className="param">
+        <h3>Gain</h3>
+        <input
+          onChange={changeSetting}
+          type="range"
+          id="gain"
+          min="0"
+          step="0.001"
+          max="1"
+          value={oscSettings.gain}
+        />
       </div>
       <div className="param">
         <h3>Frequency</h3>

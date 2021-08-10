@@ -13,11 +13,10 @@ function Canvas({ analyser, type }) {
   analyser.maxDecibels = -10;
 
   if (type === "time") {
-    analyser.fftSize = 512;
     bufferLength = analyser.fftSize;
     dataArray = new Float32Array(bufferLength);
   } else if (type === "frequency") {
-    analyser.fftSize = 2048;
+    analyser.fftSize = 256;
     bufferLength = analyser.frequencyBinCount;
     dataArrayAlt = new Uint8Array(bufferLength);
   }
@@ -60,7 +59,7 @@ function Canvas({ analyser, type }) {
       ctx.strokeStyle = "rgb(255, 255, 255)";
       ctx.beginPath();
 
-      let barWidth = (size.width / bufferLength) * 2.5 - 1;
+      let barWidth = size.width / bufferLength;
       let barHeight;
       let x = 0;
 
