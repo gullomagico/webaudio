@@ -88,10 +88,10 @@ const Osc = () => {
         <h3>Frequency</h3>
         <input
           className="w-50 m-auto my-2"
+          onChange={changeTempFreq}
           type="text"
           id="tempFreq"
           value={oscSettings.tempFreq}
-          onChange={changeTempFreq}
           onKeyUp={changeTempFreq}
         />
         <input
