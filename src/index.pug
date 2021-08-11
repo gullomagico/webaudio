@@ -1,0 +1,20 @@
+- const fs = require('fs');
+- 
+  let titles = [
+    {title: "Oscillator", desc: "Simple Oscillator with some parameters"},
+    {title: "Filters", desc: "Different filters applied to white noise"}
+  ]
+
+include includes/head
+body
+  include includes/navbar
+  header.container.text-center
+    p.text-light.
+      This is a collection of examples and experiments with the Web Audio API technology.
+  .container.text-center
+    .row 
+      each page in titles  
+        .col-12.col-sm-6.my-2.hover
+          a(type="button" class="btn btn-outline-light w-100" href=page.title+".html") 
+            h2 #{page.title}
+            p #{page.desc}
