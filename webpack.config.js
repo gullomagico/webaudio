@@ -63,6 +63,12 @@ module.exports = (env, options) => {
             },
           },
         },
+        {
+          test: /\.(ico)/,
+          use: {
+            loader: "file-loader?name=assets/[name].[ext]",
+          },
+        },
       ],
     },
     plugins: [
