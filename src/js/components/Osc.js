@@ -38,13 +38,13 @@ const Osc = () => {
     if (id === "frequency") {
       value = range2freq(value);
       setOscSettings({ ...oscSettings, tempFreq: value, frequency: value });
-      osc.frequency.value = value;
+      osc.frequency.linearRampToValueAtTime(value, actx.currentTime + 0.1);
     } else if (id === "gain") {
       setOscSettings({ ...oscSettings, gain: value });
-      gain.gain.setValueAtTime(value, actx.currentTime);
+      gain.gain.linearRampToValueAtTime(value, actx.currentTime + 0.1);
     } else {
       setOscSettings({ ...oscSettings, [id]: value });
-      osc[id].value = value;
+      osc[id].linearRampToValueAtTime(value, actx.currentTime + 0.1);
     }
   };
   const changeType = (e) => {
@@ -56,7 +56,10 @@ const Osc = () => {
     setOscSettings({ ...oscSettings, tempFreq: e.target.value });
     if (e.key === "Enter") {
       setOscSettings({ ...oscSettings, frequency: e.target.value });
-      osc.frequency.value = e.target.value;
+      osc.frequency.linearRampToValueAtTime(
+        e.target.value,
+        actx.currentTime + 0.1
+      );
     }
   };
 
