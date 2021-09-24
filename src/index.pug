@@ -15,6 +15,6 @@ body
     .row 
       each page in titles  
         .col-12.col-sm-6.my-2.hover
-          a(type="button" class="btn btn-outline-light w-100" href=page.title+".html") 
+          a(type="button" class="btn btn-outline-light w-100" href=page.title) 
             h2 #{page.title}
             p #{page.desc}

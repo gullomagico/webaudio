@@ -7,29 +7,37 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const buildPath = path.resolve(__dirname, "dist");
 
-// Set up html webpack plugin for every .pug file in pages folder
-let htmlPagesNames = fs.readdirSync("./src/pages");
-let multipleHtmlPlugins = htmlPagesNames.map((name) => {
+// Create an HTML page for every directory in "src/pages"
+let pages = fs.readdirSync("./src/pages");
+let multipleHtmlPlugins = pages.map((name) => {
   return new HtmlWebpackPlugin({
-    title: name.slice(0, -4) + " - WebAudio",
-    template: "src/pages/" + name,
-    filename: name.slice(0, -4) + ".html",
-    chunks: ["main", name.slice(0, -4)],
+    title: name + " - WebAudio",
+    template: "src/pages/" + name + "/index.pug",
+    filename: name + "/index.html",
+    chunks: ["main", name + "/index"],
   });
 });
+const multipleEntries = pages.reduce(
+  (o, key) => ({
+    ...o,
+    [key + "/index"]: "./src/pages/" + key + "/index.js",
+  }),
+  {
+    main: "./src/main",
+  }
+);
 
 module.exports = (env, options) => {
   console.log("This is the webpack 'mode': " + options.mode);
   return {
-    entry: {
-      main: "./src/main",
-      Oscillator: "./src/js/Oscillator",
-      Filters: "./src/js/Filters",
-    },
+    entry: multipleEntries,
     output: {
       path: buildPath,
     },
     resolve: {
+      alias: {
+        "@root": __dirname,
+      },
       extensions: [".js", ".jsx"],
     },
     module: {
@@ -60,6 +68,7 @@ module.exports = (env, options) => {
             loader: "pug-loader",
             options: {
               pretty: true,
+              root: path.resolve(__dirname, "src/includes"),
             },
           },
         },

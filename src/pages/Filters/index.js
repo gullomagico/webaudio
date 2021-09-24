@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import App from "./components/Osc";
+import App from "@root/src/js/components/Filters";
 
-import "../scss/Oscillator.scss";
+import "@root/src/scss/Filters.scss";
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(
