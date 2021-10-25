@@ -91,7 +91,7 @@ module.exports = (env, options) => {
       new InterpolateHtmlPlugin({
         PUBLIC_URL:
           options.mode === "production"
-            ? "https://cafa.dev/WebAudio"
+            ? "https://cafa.dev/webaudio"
             : "http://localhost:8080",
       }),
     ].concat(multipleHtmlPlugins),
