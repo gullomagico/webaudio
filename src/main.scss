@@ -1,0 +1,21 @@
+/* @use "~bootstrap/scss/functions";
+@use "~bootstrap/scss/variables";
+@use "~bootstrap/scss/mixins"; */
+
+@use "~bootstrap/scss/bootstrap";
+@use "~scss/colors";
+
+body {
+  background-color: colors.$bg-color;
+  margin-top: 100px;
+}
+
+#navbar nav {
+  background-color: colors.$base-color;
+}
+
+header {
+  height: auto;
+  margin-bottom: 50px;
+  font-size: 1.5rem;
+}
