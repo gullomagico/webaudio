@@ -1,51 +1,57 @@
 ---
-import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
 ---
 
-<Layout title="Welcome to Astro.">
-	<main>
-		<h1>Welcome to <span class="text-gradient">Astro</span></h1>
-		<p class="instructions">
-			To get started, open the directory <code>src/pages</code> in your project.<br />
-			<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
-		</p>
-		<ul role="list" class="link-card-grid">
-			<Card
-				href="https://docs.astro.build/"
-				title="Documentation"
-				body="Learn how Astro works and explore the official API docs."
-			/>
-			<Card
-				href="https://astro.build/integrations/"
-				title="Integrations"
-				body="Supercharge your project with new frameworks and libraries."
-			/>
-			<Card
-				href="https://astro.build/themes/"
-				title="Themes"
-				body="Explore a galaxy of community-built starter themes."
-			/>
-			<Card
-				href="https://astro.build/chat/"
-				title="Community"
-				body="Come say hi to our amazing Discord community. ❤️"
-			/>
-		</ul>
-	</main>
-</Layout>
+<!DOCTYPE html>
+<html lang="en" class="bg-gray-900">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="A collection of examples and experiments with the Web Audio API technology.">
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Home - WebAudio</title>
+	</head>
+	<body>
+		<main class="m-auto p-6 max-w-5xl">
+			<h1 class="text-4xl font-bold text-center">Welcome to <span class="text-gradient">WebAudio</span></h1>
+			<p class="instructions bg-gray-700">
+				This is a collection of examples and experiments with the 
+				<a class="text-green-400" href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API" target="_blank">Web Audio API technology</a>.<br />
+				Each of this cards contains a single page application with a prototype.
+			</p>
+			<ul role="list" class="link-card-grid">
+				<Card
+					href="/oscillator"
+					title="Oscillator Node"
+					body="Used for generating basic audio waveforms."
+				/>
+				<Card
+					href="/filters"
+					title="Biquad Filter Node"
+					body="Represents a simple low-order filter. Used on white noise."
+				/>
+			</ul>
+		</main>
+	</body>
+</html>
+
+<style is:global>
+	:root {
+		--accent: 0, 150, 20;
+		--accent-gradient: linear-gradient(45deg, rgb(var(--accent)), #59db59 30%, #c3ffa8 60%);
+	}
+	html {
+		color: #eee;
+		font-family: system-ui, sans-serif;
+	}
+	code {
+		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
+			Bitstream Vera Sans Mono, Courier New, monospace;
+	}
+</style>
 
 <style>
-	main {
-		margin: auto;
-		padding: 1.5rem;
-		max-width: 60ch;
-	}
-	h1 {
-		font-size: 3rem;
-		font-weight: 800;
-		margin: 0;
-	}
 	.text-gradient {
 		background-image: var(--accent-gradient);
 		-webkit-background-clip: text;
@@ -56,8 +62,7 @@ import Card from '../components/Card.astro';
 	.instructions {
 		line-height: 1.6;
 		margin: 1rem 0;
-		border: 1px solid rgba(var(--accent), 25%);
-		background-color: white;
+		border: 2px solid rgba(var(--accent), 25%);
 		padding: 1rem;
 		border-radius: 0.4rem;
 	}
