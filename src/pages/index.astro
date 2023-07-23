@@ -1,4 +1,5 @@
 ---
+import '../main.css';
 import Card from '../components/Card.astro';
 ---
 
@@ -14,10 +15,14 @@ import Card from '../components/Card.astro';
 	</head>
 	<body>
 		<main class="m-auto p-6 max-w-5xl">
-			<h1 class="text-4xl font-bold text-center">Welcome to <span class="text-gradient">WebAudio</span></h1>
-			<p class="instructions bg-gray-700">
+			<h1 class="text-4xl font-bold text-center pb-5">Welcome to <span class="text-gradient">WebAudio</span></h1>
+			<p class="instructions bg-gray-700 my-7">
 				This is a collection of examples and experiments with the 
-				<a class="text-green-400" href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API" target="_blank">Web Audio API technology</a>.<br />
+				<a 
+					class="text-gradient font-bold" 
+					href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API" 
+					target="_blank">Web Audio API technology</a>.
+				<br />
 				Each of this cards contains a single page application with a prototype.
 			</p>
 			<ul role="list" class="link-card-grid">
@@ -27,7 +32,22 @@ import Card from '../components/Card.astro';
 					body="Used for generating basic audio waveforms."
 				/>
 				<Card
-					href="/filters"
+					href="/biquadfilter"
+					title="Biquad Filter Node"
+					body="Represents a simple low-order filter. Used on white noise."
+				/>
+				<Card
+					href="/biquadfilter"
+					title="Biquad Filter Node"
+					body="Represents a simple low-order filter. Used on white noise."
+				/>
+				<Card
+					href="/biquadfilter"
+					title="Biquad Filter Node"
+					body="Represents a simple low-order filter. Used on white noise."
+				/>
+				<Card
+					href="/biquadfilter"
 					title="Biquad Filter Node"
 					body="Represents a simple low-order filter. Used on white noise."
 				/>
@@ -36,51 +56,17 @@ import Card from '../components/Card.astro';
 	</body>
 </html>
 
-<style is:global>
-	:root {
-		--accent: 0, 150, 20;
-		--accent-gradient: linear-gradient(45deg, rgb(var(--accent)), #59db59 30%, #c3ffa8 60%);
-	}
-	html {
-		color: #eee;
-		font-family: system-ui, sans-serif;
-	}
-	code {
-		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-			Bitstream Vera Sans Mono, Courier New, monospace;
-	}
-</style>
-
 <style>
-	.text-gradient {
-		background-image: var(--accent-gradient);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 400%;
-		background-position: 0%;
-	}
 	.instructions {
 		line-height: 1.6;
-		margin: 1rem 0;
 		border: 2px solid rgba(var(--accent), 25%);
 		padding: 1rem;
 		border-radius: 0.4rem;
 	}
-	.instructions code {
-		font-size: 0.875em;
-		font-weight: bold;
-		background: rgba(var(--accent), 12%);
-		color: rgb(var(--accent));
-		border-radius: 4px;
-		padding: 0.3em 0.45em;
-	}
-	.instructions strong {
-		color: rgb(var(--accent));
-	}
 	.link-card-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-		gap: 1rem;
+		grid-template-columns: repeat(auto-fit, minmax(37ch, 1fr));
+		gap: 1.5rem;
 		padding: 0;
 	}
 </style>
