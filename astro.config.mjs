@@ -5,6 +5,6 @@ import tailwind from "@astrojs/tailwind";
 // https://astro.build/config
 export default defineConfig({
   integrations: [tailwind()],
-  site: 'https://gullomagico.github.io/webaudio',
-  base: '/',
+  site: 'https://gullomagico.github.io',
+  base: '/webaudio',
 });
