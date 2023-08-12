@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect } from 'react';
 
 function Canvas({ analyser, type }) {
   const canvasRef = useRef(null);
@@ -13,24 +13,24 @@ function Canvas({ analyser, type }) {
   analyser.minDecibels = -90;
   analyser.maxDecibels = -10;
 
-  if (type === "time") {
+  if (type === 'time') {
     bufferLength = analyser.fftSize;
     dataArray = new Float32Array(bufferLength);
-  } else if (type === "frequency") {
+  } else if (type === 'frequency') {
     analyser.fftSize = 256;
     bufferLength = analyser.frequencyBinCount;
     dataArrayAlt = new Uint8Array(bufferLength);
   }
 
   const renderFrame = () => {
-    const ctx = canvasRef.current.getContext("2d");
-    if (type === "time") {
+    const ctx = canvasRef.current.getContext('2d');
+    if (type === 'time') {
       analyser.getFloatTimeDomainData(dataArray);
 
-      ctx.fillStyle = "rgb(20, 50, 200)";
+      ctx.fillStyle = 'rgb(20, 50, 200)';
       ctx.fillRect(0, 0, size.width, size.height);
       ctx.lineWidth = 1;
-      ctx.strokeStyle = "rgb(255, 255, 255)";
+      ctx.strokeStyle = 'rgb(255, 255, 255)';
       ctx.beginPath();
 
       let sliceWidth = (size.width * 1.0) / bufferLength;
@@ -51,13 +51,13 @@ function Canvas({ analyser, type }) {
       ctx.lineTo(size.width, size.height / 2);
       ctx.stroke();
     }
-    if (type === "frequency") {
+    if (type === 'frequency') {
       analyser.getByteFrequencyData(dataArrayAlt);
 
-      ctx.fillStyle = "rgb(20, 50, 200)";
+      ctx.fillStyle = 'rgb(20, 50, 200)';
       ctx.fillRect(0, 0, size.width, size.height);
       ctx.lineWidth = 1;
-      ctx.strokeStyle = "rgb(255, 255, 255)";
+      ctx.strokeStyle = 'rgb(255, 255, 255)';
       ctx.beginPath();
 
       let barWidth = size.width / bufferLength;
@@ -67,7 +67,7 @@ function Canvas({ analyser, type }) {
       for (let i = 0; i < bufferLength; i++) {
         barHeight = dataArrayAlt[i];
 
-        ctx.fillStyle = "rgb(" + (barHeight + 100) + ",50,50)";
+        ctx.fillStyle = 'rgb(' + (barHeight + 100) + ',50,50)';
         ctx.fillRect(x, size.height - barHeight / 2, barWidth, barHeight / 2);
 
         x += barWidth;

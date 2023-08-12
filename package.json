@@ -18,7 +18,8 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "prettier": "npx prettier . --write"
   },
   "dependencies": {
     "@astrojs/react": "^2.2.1",
@@ -30,5 +31,9 @@
     "react-dom": "^18.2.0",
     "standardized-audio-context": "^25.3.54",
     "tailwindcss": "^3.3.3"
+  },
+  "devDependencies": {
+    "prettier": "^3.0.1",
+    "prettier-plugin-tailwindcss": "^0.5.2"
   }
 }
