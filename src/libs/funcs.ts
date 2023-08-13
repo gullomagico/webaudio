@@ -14,3 +14,6 @@ export function range2freq(range: number) {
 export function freq2range(freq: number) {
   return (Math.log10(freq) - minv) / scale + minp;
 }
+
+export const sleep = (ms: number) =>
+  new Promise((resolve) => setTimeout(resolve, ms));
