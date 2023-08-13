@@ -17,3 +17,27 @@ export function freq2range(freq: number) {
 
 export const sleep = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
+
+export const createExponentialFadeOutCurve = (duration: number, sampleRate: number, exponent: number, startValue: number): Float32Array => {
+  const numberOfSamples = Math.floor(duration * sampleRate);
+  const curve = new Float32Array(numberOfSamples);
+
+  for (let i = 0; i < numberOfSamples; i++) {
+      const t = i / numberOfSamples;
+      curve[i] = startValue * Math.pow(1 - t, exponent);
+  }
+
+  return curve;
+}
+
+export const createExponentialFadeInCurve = (duration: number, sampleRate: number, exponent: number, endValue: number): Float32Array => {
+  const numberOfSamples = Math.floor(duration * sampleRate);
+  const curve = new Float32Array(numberOfSamples);
+
+  for (let i = 0; i < numberOfSamples; i++) {
+      const t = i / numberOfSamples;
+      curve[i] = endValue - (endValue * Math.pow(1 - t, exponent));
+  }
+
+  return curve;
+}

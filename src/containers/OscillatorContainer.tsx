@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Canvas from '../components/Canvas';
-import { sleep } from '../libs/funcs';
+import { createExponentialFadeInCurve, createExponentialFadeOutCurve, sleep } from '../libs/funcs';
 import { AudioContext, TOscillatorType } from 'standardized-audio-context';
 
 const actx = new AudioContext();
@@ -8,6 +8,7 @@ const out = actx.destination;
 actx.suspend();
 
 const osc = actx.createOscillator();
+osc.start();
 
 const gainNode = actx.createGain();
 gainNode.gain.value = 0.1;
@@ -18,9 +19,12 @@ osc.connect(gainNode);
 gainNode.connect(analyser);
 gainNode.connect(out);
 
-osc.start();
-
 let gainLevel = gainNode.gain.value;
+let globalPlaying = false;
+const fadeDuration = .5; // Durata del fade-out in secondi
+const sampleRate = actx.sampleRate; // Frequenza di campionamento dell'AudioContext
+const exponent = 3;
+
 
 const GainInput: React.FC = () => {
   const [gain, setGain] = useState(gainNode.gain.value);
@@ -29,7 +33,7 @@ const GainInput: React.FC = () => {
     const value = parseFloat(e.target.value);
     gainLevel = value;
     setGain(value);
-    gainNode.gain.value = value;
+    if (globalPlaying) gainNode.gain.value = value;
   };
 
   return (
@@ -137,16 +141,19 @@ const TogglePlay: React.FC = () => {
   const active = 'border-green-600 bg-green-950 text-green-300';
   const inactive = 'border-red-600 bg-red-950 text-red-300';
 
-  const toggleState = async () => {
+  const toggleState = () => {
     if (playing) {
-      gainNode.gain.linearRampToValueAtTime(0, actx.currentTime + 0.1);
-      await sleep(110);
-      await actx.suspend();
+      const fadeCurve = createExponentialFadeOutCurve(fadeDuration, sampleRate, exponent, gainLevel);
+      gainNode.gain.setValueCurveAtTime(fadeCurve , actx.currentTime, fadeDuration);
+      // await actx.suspend();
       setPlaying(false);
+      globalPlaying = false;
     } else {
-      await actx.resume();
-      gainNode.gain.linearRampToValueAtTime(gainLevel, actx.currentTime + 0.1);
+      if (actx.state == 'suspended') actx.resume();
+      const fadeCurve = createExponentialFadeInCurve(fadeDuration, sampleRate, exponent, gainLevel);
+      gainNode.gain.setValueCurveAtTime(fadeCurve, actx.currentTime, fadeDuration);
       setPlaying(true);
+      globalPlaying = true;
     }
   };
 
