@@ -4,12 +4,7 @@
 
 :root {
   --accent: 0, 150, 20;
-  --accent-gradient: linear-gradient(
-    45deg,
-    rgb(var(--accent)),
-    #59db59 30%,
-    #c3ffa8 60%
-  );
+  --accent-gradient: linear-gradient(45deg, rgb(var(--accent)), #c3ffa8 60%);
 }
 
 html {
