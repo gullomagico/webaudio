@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import Canvas from '../components/Canvas';
-import { createExponentialFadeInCurve, createExponentialFadeOutCurve, sleep } from '../libs/funcs';
+import {
+  createExponentialFadeInCurve,
+  createExponentialFadeOutCurve,
+  sleep,
+} from '../libs/funcs';
 import { AudioContext, TOscillatorType } from 'standardized-audio-context';
 
 const actx = new AudioContext();
@@ -21,10 +25,9 @@ gainNode.connect(out);
 
 let gainLevel = gainNode.gain.value;
 let globalPlaying = false;
-const fadeDuration = .5; // Durata del fade-out in secondi
+const fadeDuration = 0.5; // Durata del fade-out in secondi
 const sampleRate = actx.sampleRate; // Frequenza di campionamento dell'AudioContext
 const exponent = 3;
-
 
 const GainInput: React.FC = () => {
   const [gain, setGain] = useState(gainNode.gain.value);
@@ -143,15 +146,33 @@ const TogglePlay: React.FC = () => {
 
   const toggleState = () => {
     if (playing) {
-      const fadeCurve = createExponentialFadeOutCurve(fadeDuration, sampleRate, exponent, gainLevel);
-      gainNode.gain.setValueCurveAtTime(fadeCurve , actx.currentTime, fadeDuration);
+      const fadeCurve = createExponentialFadeOutCurve(
+        fadeDuration,
+        sampleRate,
+        exponent,
+        gainLevel
+      );
+      gainNode.gain.setValueCurveAtTime(
+        fadeCurve,
+        actx.currentTime,
+        fadeDuration
+      );
       // await actx.suspend();
       setPlaying(false);
       globalPlaying = false;
     } else {
       if (actx.state == 'suspended') actx.resume();
-      const fadeCurve = createExponentialFadeInCurve(fadeDuration, sampleRate, exponent, gainLevel);
-      gainNode.gain.setValueCurveAtTime(fadeCurve, actx.currentTime, fadeDuration);
+      const fadeCurve = createExponentialFadeInCurve(
+        fadeDuration,
+        sampleRate,
+        exponent,
+        gainLevel
+      );
+      gainNode.gain.setValueCurveAtTime(
+        fadeCurve,
+        actx.currentTime,
+        fadeDuration
+      );
       setPlaying(true);
       globalPlaying = true;
     }
@@ -176,45 +197,6 @@ const Container: React.FC = () => {
         <TogglePlay />
         <GainInput />
         <TypeInput />
-      </div>
-      <div className="warning-banner">
-        <p className="text-green-500">
-          <strong>Avviso:</strong>
-        </p>
-        <p>
-          Questo sito utilizza le Web Audio API per generare audio attraverso
-          oscillatori con frequenze da 20 a 20.000 Hz. L'ascolto prolungato a
-          volumi elevati potrebbe causare danni all'udito. Si consiglia di{' '}
-          <strong className="text-gradient">abbassare il volume</strong> e
-          limitare il tempo di esposizione.
-        </p>
-        <p>
-          L'uso scorretto delle Web Audio API potrebbe anche comportare rischi
-          aggiuntivi, tra cui:
-        </p>
-        <ul>
-          <li>
-            Danni all'hardware audio, come altoparlanti o cuffie, a causa di
-            segnali ad alta intensità.
-          </li>
-          <li>
-            Rischio di disturbi nel sonno, ansia o stress dovuti all'esposizione
-            a suoni intensi o fastidiosi.
-          </li>
-          <li>
-            Potenziali interferenze con apparecchiature mediche, come pacemaker,
-            nei pazienti sensibili.
-          </li>
-          <li>
-            Possibilità di causare disagio o fastidio a persone con
-            ipersensibilità a certe frequenze.
-          </li>
-        </ul>
-        <p>
-          Si prega di prestare attenzione all'uso delle Web Audio API e di
-          adottare misure di precauzione adeguate per proteggere la tua salute e
-          l'integrità delle apparecchiature audio.
-        </p>
       </div>
     </React.StrictMode>
   );

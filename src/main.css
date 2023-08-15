@@ -5,6 +5,7 @@
 :root {
   --accent: 0, 150, 20;
   --accent-gradient: linear-gradient(45deg, rgb(var(--accent)), #c3ffa8 60%);
+  --upper-padding: calc(100vh-104px);
 }
 
 html {
@@ -19,4 +20,13 @@ html {
   -webkit-text-fill-color: transparent;
   background-size: 400%;
   background-position: 0%;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(var(--accent));
+  border-radius: 3px;
 }
