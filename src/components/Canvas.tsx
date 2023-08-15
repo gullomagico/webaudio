@@ -1,14 +1,18 @@
-// @ts-nocheck
 import React, { useRef, useEffect } from 'react';
+import type { IAnalyserNode, IAudioContext } from 'standardized-audio-context';
 
-function Canvas({ analyser, type }) {
-  const canvasRef = useRef(null);
-  const requestIdRef = useRef(null);
-  const size = { width: window.innerWidth, height: 150 };
+interface CanvasProps {
+  analyser: IAnalyserNode<IAudioContext>;
+  type: 'time' | 'frequency';
+}
 
-  let bufferLength;
-  let dataArray;
-  let dataArrayAlt;
+const Canvas: React.FC<CanvasProps> = ({ analyser, type }) => {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const requestIdRef = useRef<number | null>(null);
+
+  let bufferLength: number;
+  let dataArray: Float32Array;
+  let dataArrayAlt: Uint8Array;
 
   analyser.minDecibels = -90;
   analyser.maxDecibels = -10;
@@ -23,14 +27,22 @@ function Canvas({ analyser, type }) {
   }
 
   const renderFrame = () => {
-    const ctx = canvasRef.current.getContext('2d');
+    if (canvasRef.current == null) return;
+    const ctx = canvasRef.current.getContext('2d')!;
+
+    const size = {
+      width: canvasRef.current.width,
+      height: canvasRef.current.height,
+    };
+
     if (type === 'time') {
       analyser.getFloatTimeDomainData(dataArray);
 
-      ctx.fillStyle = 'rgb(20, 50, 200)';
+      ctx.fillStyle = 'rgb(17, 24, 39)';
+
       ctx.fillRect(0, 0, size.width, size.height);
       ctx.lineWidth = 1;
-      ctx.strokeStyle = 'rgb(255, 255, 255)';
+      ctx.strokeStyle = 'rgb(134, 239, 172)';
       ctx.beginPath();
 
       let sliceWidth = (size.width * 1.0) / bufferLength;
@@ -84,11 +96,16 @@ function Canvas({ analyser, type }) {
   useEffect(() => {
     requestIdRef.current = requestAnimationFrame(tick);
     return () => {
-      cancelAnimationFrame(requestIdRef.current);
+      cancelAnimationFrame(requestIdRef.current!);
     };
   });
 
-  return <canvas {...size} ref={canvasRef} />;
-}
+  return (
+    <canvas
+      ref={canvasRef}
+      className="h-[inherit] w-full rounded-lg border-2 border-green-600"
+    />
+  );
+};
 
 export default Canvas;

@@ -25,8 +25,8 @@ gainNode.connect(out);
 
 let gainLevel = gainNode.gain.value;
 let globalPlaying = false;
-const fadeDuration = 0.5; // Durata del fade-out in secondi
-const sampleRate = actx.sampleRate; // Frequenza di campionamento dell'AudioContext
+const fadeDuration = 0.5;
+const sampleRate = actx.sampleRate;
 const exponent = 3;
 
 const GainInput: React.FC = () => {
@@ -36,7 +36,8 @@ const GainInput: React.FC = () => {
     const value = parseFloat(e.target.value);
     gainLevel = value;
     setGain(value);
-    if (globalPlaying) gainNode.gain.value = value;
+    if (globalPlaying)
+      gainNode.gain.linearRampToValueAtTime(value, actx.currentTime + 0.01);
   };
 
   return (
@@ -192,7 +193,9 @@ const Container: React.FC = () => {
   return (
     <React.StrictMode>
       <div className="mt-7 flex flex-col items-center gap-y-5">
-        {/* <Canvas analyser={analyser} type="time" /> */}
+        <div className="h-20 w-full">
+          <Canvas analyser={analyser} type="time" />
+        </div>
         <FreqInput />
         <TogglePlay />
         <GainInput />
