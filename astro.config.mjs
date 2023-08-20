@@ -6,7 +6,20 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [tailwind(), react(), sitemap()],
+  integrations: [
+    tailwind(),
+    react(),
+    sitemap({
+      serialize(item) {
+        if (item.url === 'https://cafa.dev/webaudio') return undefined; // remove duplicate index page from sitemap
+        item.changefreq = 'weekly';
+        item.lastmod = new Date();
+        item.priority = 0.8;
+
+        return item;
+      },
+    }),
+  ],
   site: 'https://cafa.dev',
   base: '/webaudio',
   trailingSlash: 'never',
