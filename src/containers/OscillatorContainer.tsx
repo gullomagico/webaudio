@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Canvas from '../components/Canvas';
 import {
   createExponentialFadeInCurve,
@@ -62,40 +62,65 @@ const GainInput: React.FC = () => {
 
 const FreqInput: React.FC = () => {
   const [frequency, setFrequency] = useState(osc.frequency.value);
+  const [editMode, setEditMode] = useState<boolean>(false);
+  const [showTip, setShowTip] = useState<boolean>(false);
+
+  const toggleEditMode = () => {
+    setEditMode(!editMode);
+  };
 
   const handleFrequencyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);
     if (isNaN(value)) return;
     setFrequency(value);
   };
-
   const setFrequencyValue = () => {
+    setEditMode(false);
     osc.frequency.linearRampToValueAtTime(frequency, actx.currentTime + 0.1);
   };
 
+
   return (
-    <>
-      <label id="freq-label" className="invisible absolute" htmlFor="freq">
-        Frequency:
-      </label>
-      <input
-        className="appereance-none w-full max-w-sm rounded-lg border-2 border-green-600 bg-green-950 text-center text-5xl text-green-300 accent-green-700"
-        onChange={(e) => handleFrequencyChange(e)}
-        id="freq"
-        type="number"
-        min="20"
-        max="20000"
-        value={frequency}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') setFrequencyValue();
-        }}
-        onBlur={() => setFrequencyValue()}
-        aria-labelledby="freq-label"
-      />
-      <p className="text-xs">
-        Premi "Enter" per confermare il valore di frequenza da utilizzare
-      </p>
-    </>
+    <div className='max-h-14 max-w-sm'>
+      {editMode ? (
+        <>
+          <label id="freq-label" className="invisible absolute" htmlFor="freq">
+            Frequency:
+          </label>
+          <input
+            className="max-h-14 rounded-lg border-2 border-green-600 bg-green-950 text-center text-5xl text-green-300 accent-green-700"
+            onChange={(e) => handleFrequencyChange(e)}
+            autoFocus
+            id="freq"
+            type="number"
+            min="20"
+            max="20000"
+            value={frequency}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') setFrequencyValue();
+            }}
+            onBlur={() => setFrequencyValue()}
+            onWheel={(e) => { e.stopPropagation() }}
+            aria-labelledby="freq-label"
+          />
+        </>
+      ) : (
+        <>
+          <span
+            className="cursor-pointer p-3 text-center text-5xl text-green-300 accent-green-700"
+            onClick={() => { toggleEditMode(); setShowTip(false) }}
+            id='freq'
+            onMouseOver={() => setShowTip(true)}
+            onMouseLeave={() => setShowTip(false)}
+          >
+            {frequency} <span className='text-3xl'>Hz</span>
+          </span>
+          <span className={`m-auto block text-center text-xs ${showTip ? '' : 'invisible'}`}>
+            Click to edit frequency
+          </span>
+        </>
+      )}
+    </div>
   );
 };
 
@@ -141,6 +166,20 @@ const TypeInput: React.FC = () => {
 
 const TogglePlay: React.FC = () => {
   const [playing, setPlaying] = useState(false);
+
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === ' ') {
+      toggleState();
+      event.preventDefault();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [playing]);
 
   const active = 'border-green-600 bg-green-950 text-green-300';
   const inactive = 'border-red-600 bg-red-950 text-red-300';
