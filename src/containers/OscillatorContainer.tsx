@@ -203,7 +203,11 @@ const TogglePlay: React.FC = () => {
       setPlaying(false);
       globalPlaying = false;
     } else {
-      if (actx.state == 'suspended') await actx.resume();
+      if (actx.state == 'suspended') {
+        gainNode.gain.value = 0; // audio pop at first play
+        await actx.resume();
+      }
+
       const fadeCurve = createExponentialFadeInCurve(
         fadeDuration,
         sampleRate,

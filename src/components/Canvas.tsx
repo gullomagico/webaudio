@@ -49,7 +49,8 @@ const Canvas: React.FC<CanvasProps> = ({ analyser, type }) => {
       let x = 0;
 
       for (let i = 0; i < bufferLength; i++) {
-        let v = dataArray[i] * 50.0;
+        let v = dataArray[i] * 100.0;
+
         let y = size.height / 2 + v;
 
         if (i === 0) {
