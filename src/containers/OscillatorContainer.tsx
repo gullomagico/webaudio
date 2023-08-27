@@ -25,7 +25,7 @@ gainNode.connect(out);
 
 let gainLevel = gainNode.gain.value;
 let globalPlaying = false;
-const fadeDuration = 0.5;
+const fadeDuration = 0.2;
 const sampleRate = actx.sampleRate;
 const exponent = 3;
 
@@ -184,7 +184,7 @@ const TogglePlay: React.FC = () => {
   const active = 'border-green-600 bg-green-950 text-green-300';
   const inactive = 'border-red-600 bg-red-950 text-red-300';
 
-  const toggleState = () => {
+  const toggleState = async () => {
     if (playing) {
       const fadeCurve = createExponentialFadeOutCurve(
         fadeDuration,
@@ -197,11 +197,13 @@ const TogglePlay: React.FC = () => {
         actx.currentTime,
         fadeDuration
       );
+
       // await actx.suspend();
+      await sleep(fadeDuration * 1000);
       setPlaying(false);
       globalPlaying = false;
     } else {
-      if (actx.state == 'suspended') actx.resume();
+      if (actx.state == 'suspended') await actx.resume();
       const fadeCurve = createExponentialFadeInCurve(
         fadeDuration,
         sampleRate,
@@ -213,6 +215,8 @@ const TogglePlay: React.FC = () => {
         actx.currentTime,
         fadeDuration
       );
+
+      await sleep(fadeDuration * 1000);
       setPlaying(true);
       globalPlaying = true;
     }
