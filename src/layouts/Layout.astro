@@ -18,18 +18,21 @@ const { title, description } = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body>
-		<slot />
+		<div class="min-h-screen flex flex-col items-center justify-between">
+			<slot />
 
-		<footer class="bg-white rounded-lg shadow m-auto max-w-5xl dark:bg-gray-800">
-			<div class="w-full mx-auto max-w-screen-xl p-4 flex items-center justify-center">
-				<span class="text-sm px-2 text-gray-500 sm:text-center dark:text-gray-400"
-					>Coded by <a href="https://cafa.dev" class="hover:underline text-gradient">Cafa.dev</a>
-				</span>
-				<span class="text-sm text-gray-500 sm:text-center dark:text-gray-400"
-					>Built with <a href="https://astro.build" class="hover:underline text-gradient">{Astro.generator}</a
-					>
-				</span>
-			</div>
-		</footer>
+			<footer class="bg-white items-center rounded-lg shadow w-[64rem] max-w-full dark:bg-gray-800">
+				<div class="w-full mx-auto max-w-screen-xl p-4 flex items-center justify-center">
+					<span class="text-sm px-2 text-gray-500 sm:text-center dark:text-gray-400"
+						>Coded by <a href="https://cafa.dev" class="hover:underline text-gradient">Cafa.dev</a>
+					</span>
+					<span class="text-sm text-gray-500 sm:text-center dark:text-gray-400"
+						>Built with <a href="https://astro.build" class="hover:underline text-gradient"
+							>{Astro.generator}</a
+						>
+					</span>
+				</div>
+			</footer>
+		</div>
 	</body>
 </html>
