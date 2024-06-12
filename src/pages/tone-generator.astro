@@ -2,45 +2,37 @@
 import '../main.css';
 import OscillatorContainer from '../containers/OscillatorContainer';
 import Layout from '../layouts/Layout.astro';
+import Modal from '../components/Modal.astro';
 ---
 
 <html lang="en" class="bg-gray-900">
 	<Layout title="Tone Generator - WebAudio" description="Generate basic audio waveforms using a digital oscillator.">
 		<main class="m-auto p-6 max-w-5xl select-none">
 			<h1 class="text-4xl font-bold text-center pb-5 text-gradient">Tone Generator</h1>
-			<div class="[min-height:calc(100vh-104px)]">
-				<!-- TODO Change this to dinamic -->
-				<OscillatorContainer client:only="react" />
-			</div>
-			<div class="warning-banner">
-				<p class="text-green-500">
-					<strong>Warning:</strong>
-				</p>
-				<p>
-					This site uses the Web Audio API to generate audio through oscillators with frequencies ranging from
-					20 to 20,000 Hz. Prolonged listening at high volumes may cause damage to your hearing. It is
-					recommended to
-					<strong class="text-gradient">lower the volume</strong> and limit the exposure time.
-				</p>
-				<p>Incorrect usage of the Web Audio API could also result in additional risks, including:</p>
-				<ul>
-					<li>Damage to audio hardware, such as speakers or headphones, due to high-intensity signals.</li>
-					<li>
-						Risk of sleep disturbances, anxiety, or stress caused by exposure to intense or annoying sounds.
-					</li>
-					<li>Potential interference with medical devices, such as pacemakers, in sensitive patients.</li>
-					<li>
-						Possibility of causing discomfort or annoyance to individuals hypersensitive to certain
-						frequencies.
-					</li>
-				</ul>
-				<p>
-					Please pay attention to the usage of the Web Audio API and take appropriate precautions to protect
-					your health and the integrity of your audio equipment.
-				</p>
-			</div>
+			<OscillatorContainer client:only="react" />
 		</main>
 	</Layout>
+
+	<Modal title="Disclaimer">
+		<p>
+			This webpage generate audio through oscillators with frequencies ranging from 20 to 20,000 Hz. Prolonged
+			listening at high volumes may cause damage to your hearing. It is recommended to
+			<strong class="text-gradient">lower the volume</strong> and limit the exposure time.
+		</p>
+		<p>Incorrect usage could also result in additional risks, including:</p>
+		<ul>
+			<li>Damage to audio hardware, such as speakers or headphones, due to high-intensity signals.</li>
+			<li>Risk of sleep disturbances, anxiety, or stress caused by exposure to intense or annoying sounds.</li>
+			<li>Potential interference with medical devices, such as pacemakers, in sensitive patients.</li>
+			<li>
+				Possibility of causing discomfort or annoyance to individuals hypersensitive to certain frequencies.
+			</li>
+		</ul>
+		<p>
+			Please pay attention to the usage of this oscillator and take appropriate precautions to protect your health
+			and the integrity of your audio equipment.
+		</p>
+	</Modal>
 
 	<style>
 		li {
@@ -49,5 +41,6 @@ import Layout from '../layouts/Layout.astro';
 			margin-left: 2rem;
 		}
 	</style>
+
 
 </html>
