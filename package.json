@@ -31,7 +31,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "standardized-audio-context": "^25.3.54",
-    "tailwindcss": "^3.3.3"
+    "tailwindcss": "^3.3.3",
+    "tone": "^15.0.4"
   },
   "devDependencies": {
     "prettier": "^3.0.2",
